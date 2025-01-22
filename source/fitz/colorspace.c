@@ -913,8 +913,9 @@ static void indexed_via_base(fz_context *ctx, fz_color_converter *cc, const floa
 static void separation_via_base(fz_context *ctx, fz_color_converter *cc, const float *src, float *dst)
 {
 	fz_colorspace *ss = cc->ss_via;
-	float base[4];
-	ss->u.separation.eval(ctx, ss->u.separation.tint, src, ss->n, base, ss->u.separation.base->n);
+	int n =  ss->u.separation.base->n;
+	float base[n>4 ? n : 4];
+	ss->u.separation.eval(ctx, ss->u.separation.tint, src, ss->n, base, n);
 	cc->convert_via(ctx, cc, base, dst);
 }
 
@@ -925,7 +926,7 @@ static void indexed_via_separation_via_base(fz_context *ctx, fz_color_converter 
 	const unsigned char *lookup = ss->u.indexed.lookup;
 	int high = ss->u.indexed.high;
 	int n = ss->u.indexed.base->n;
-	float base[4], mid[FZ_MAX_COLORS];
+	float base[n>4 ? n : 4], mid[FZ_MAX_COLORS];
 	int i, k;
 
 	/* First map through the index. */

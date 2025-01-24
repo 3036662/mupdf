@@ -1689,7 +1689,8 @@ pdf_color_push_resources(fz_context *ctx, pdf_processor *proc, pdf_obj *res)
 		pdf_drop_obj(ctx, stk->old_rdb);
 		pdf_drop_obj(ctx, stk->new_rdb);
 		fz_free(ctx, stk);
-		p->rstack = stk->next;
+		// dereferencing the `stk` variable after free(stk)
+		//p->rstack = stk->next;
 		fz_rethrow(ctx);
 	}
 }

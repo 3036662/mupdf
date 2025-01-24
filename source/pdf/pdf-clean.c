@@ -273,8 +273,9 @@ pdf_filter_type3(fz_context *ctx, pdf_document *doc, pdf_obj *obj, pdf_obj *page
 
 	}
 	fz_always(ctx)
-	{
-		res = pdf_processor_pop_resources(ctx, top);
+	{	
+		if (top)
+			res = pdf_processor_pop_resources(ctx, top);
 		for (i = 0; i < num_filters; i++)
 			pdf_drop_processor(ctx, list[i]);
 		pdf_drop_processor(ctx, proc_buffer);

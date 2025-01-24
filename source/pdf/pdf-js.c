@@ -344,15 +344,19 @@ static void field_getValue(js_State *J)
 	double num;
 
 	fz_try(js->ctx)
-		str = pdf_field_value(js->ctx, field);
+		str = pdf_field_value(js->ctx, field);	
 	fz_catch(js->ctx)
 		rethrow(js);
 
-	num = strtod(str, &end);
+	if (str)
+		strtod(str, &end);
 	if (*str && *end == 0)
 		js_pushnumber(J, num);
 	else
+	{
+		if (!str) str="";
 		js_pushstring(J, str);
+	}
 }
 
 static void field_setValue(js_State *J)

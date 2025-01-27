@@ -129,7 +129,8 @@ fz_open_image_decomp_stream(fz_context *ctx, fz_stream *tail, fz_compression_par
 
 		case FZ_IMAGE_LZW:
 			head = fz_open_lzwd(ctx, tail, params->u.lzw.early_change, 9, 0, 0);
-			if (params->u.flate.predictor > 1)
+			// It looks like a typo
+			if (params->u.lzw.predictor > 1) 
 			{
 				body = head;
 				head = fz_open_predict(ctx, body,

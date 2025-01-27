@@ -31,6 +31,7 @@
 #include <ft2build.h>
 
 #include <assert.h>
+#include <mupdf/fitz/geometry.h>
 
 #include FT_FREETYPE_H
 #include FT_ADVANCES_H
@@ -1695,7 +1696,7 @@ fz_render_t3_glyph_pixmap(fz_context *ctx, fz_font *font, int gid, fz_matrix trm
 
 	bounds = fz_expand_rect(fz_bound_glyph(ctx, font, gid, trm), 1);
 	bbox = fz_irect_from_rect(bounds);
-	bbox = fz_intersect_irect(bbox, *scissor);
+	bbox = fz_intersect_irect(bbox,scissor ? *scissor : fz_infinite_irect);
 
 	/* Glyphs must always have alpha */
 	glyph = fz_new_pixmap_with_bbox(ctx, model, bbox, NULL/* FIXME */, 1);
